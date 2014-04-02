@@ -17,7 +17,7 @@ public class ParseChatActivity extends Activity {
 
 	private EditText txtMessage;
 	private Button btnSend;
-	private String username;
+	private static String username;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
