@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 import com.androidsx.hellowordparse.R;
 
-public class ChooseUser extends Activity {
+public class ChooseUserActivity extends Activity {
 
 	private Button login;
 	private EditText user;
