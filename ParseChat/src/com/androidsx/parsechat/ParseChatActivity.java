@@ -1,6 +1,7 @@
 package com.androidsx.parsechat;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -16,11 +17,15 @@ public class ParseChatActivity extends Activity {
 
 	private EditText txtMessage;
 	private Button btnSend;
+	private String username;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parse_hello_world);
+		
+		Intent intent = getIntent();
+	    username = intent.getStringExtra("user");
 
 		Parse.initialize(this, "mMjR5lvou6mzMhjymYbEh39RCsqGQkvNLQqDQ47u",
 				"d8rT5X0HVKSS297euA4koJgsAdJaG1HEIlYnvgPM");
@@ -38,7 +43,7 @@ public class ParseChatActivity extends Activity {
 
 				String data = txtMessage.getText().toString();
 				ParseObject message = new ParseObject("Messages");
-				message.put("userName", "Lucas");
+				message.put("userName", username);
 				message.put("message", data);
 				message.saveInBackground();
 
