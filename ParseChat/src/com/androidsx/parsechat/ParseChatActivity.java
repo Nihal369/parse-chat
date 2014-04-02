@@ -13,10 +13,9 @@ import com.parse.Parse;
 import com.parse.ParseObject;
 
 public class ParseChatActivity extends Activity {
-	
+
 	private EditText txtMessage;
 	private Button btnSend;
-	private ParseObject messages;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,31 +25,27 @@ public class ParseChatActivity extends Activity {
 		Parse.initialize(this, "mMjR5lvou6mzMhjymYbEh39RCsqGQkvNLQqDQ47u",
 				"d8rT5X0HVKSS297euA4koJgsAdJaG1HEIlYnvgPM");
 		
-		createTableMessage();
+		setupUI();
 	}
-	
-	public void createTableMessage(){
-		messages = new ParseObject("Messages");
-		messages.saveInBackground();
-	}
-	
-	public void setupUI(){
-		txtMessage = (EditText)findViewById(R.id.etMensaje);
-		btnSend = (Button)findViewById(R.id.btnSend);
+
+	public void setupUI() {
+		txtMessage = (EditText) findViewById(R.id.etMensaje);
+		btnSend = (Button) findViewById(R.id.btnSend);
 		btnSend.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				String message =  txtMessage.getText().toString();
-				
-				messages.put("userName", "Vicent");
-				messages.put("message", message);
-				messages.saveInBackground();
-				
+
+				String data = txtMessage.getText().toString();
+				ParseObject message = new ParseObject("Messages");
+				message.put("userName", "Lucas");
+				message.put("message", data);
+				message.saveInBackground();
+
 			}
 		});
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
