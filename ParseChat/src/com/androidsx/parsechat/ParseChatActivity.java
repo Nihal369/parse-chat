@@ -1,51 +1,52 @@
 package com.androidsx.parsechat;
 
 import android.app.Activity;
-import android.net.ParseException;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.androidsx.hellowordparse.R;
 import com.parse.Parse;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
+import com.parse.ParseObject;
 
 public class ParseChatActivity extends Activity {
+
+	private EditText txtMessage;
+	private Button btnSend;
+	private String username;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parse_hello_world);
+		
+		Intent intent = getIntent();
+	    username = intent.getStringExtra("user");
 
-		Parse.initialize(this, "ERvMl2l8nRqFp6wlaknjy5lFLhbjMYGks8ozs9HN",
-				"RWLkkWO0jen3oVMjbVZfg0pYlEu54vZbxZcZ4J82");
-		ParseUser();
+		Parse.initialize(this, "mMjR5lvou6mzMhjymYbEh39RCsqGQkvNLQqDQ47u",
+				"d8rT5X0HVKSS297euA4koJgsAdJaG1HEIlYnvgPM");
+		
+		setupUI();
 	}
 
-	public void ParseUser() {
-		ParseUser user = new ParseUser();
-		user.setUsername("Pocho");
-		user.setPassword("1234");
-		user.setEmail("alcoypocho@gmail.com");
-
-		// other fields can be set just like with ParseObject
-		user.put("phone", "650-253-0000");
-
-		user.signUpInBackground(new SignUpCallback() {
-			@SuppressWarnings("unused")
-			public void done(ParseException e) {
-				if (e == null) {
-					// Hooray! Let them use the app now.
-				} else {
-					// Sign up didn't succeed. Look at the ParseException
-					// to figure out what went wrong
-				}
-			}
+	public void setupUI() {
+		txtMessage = (EditText) findViewById(R.id.etMensaje);
+		btnSend = (Button) findViewById(R.id.btnSend);
+		btnSend.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void done(com.parse.ParseException e) {
-				// TODO Auto-generated method stub
-				
+			public void onClick(View v) {
+
+				String data = txtMessage.getText().toString();
+				ParseObject message = new ParseObject("Messages");
+				message.put("userName", username);
+				message.put("message", data);
+				message.saveInBackground();
+
 			}
 		});
 	}
