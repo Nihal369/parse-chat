@@ -1,5 +1,0 @@
-INDEX VERSION 1.126+/Users/Poxo/Documents/GitHub/helloworld-parse/.metadata/.plugins/org.eclipse.jdt.core
-1513337093.index
-776520232.index
-717775830.index
-528763506.index
