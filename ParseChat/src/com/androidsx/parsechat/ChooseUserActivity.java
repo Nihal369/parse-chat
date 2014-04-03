@@ -51,7 +51,6 @@ public class ChooseUserActivity extends Activity {
 					openParseChatActivity(v, name);
 				} else {
 					showToast("Invalid username");
-					openParseChatActivity(v, name);
 				}
 
 			}
@@ -66,15 +65,14 @@ public class ChooseUserActivity extends Activity {
 		startActivity(i);
 	}
 	
-	public void getParseUsers(){
-		
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Users");
+	public void getParseUsers(){	
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
 		query.findInBackground(new FindCallback<ParseObject>() {
-			public void done(List<ParseObject> scoreList, ParseException e) {
-				if (scoreList != null) {
+			public void done(List<ParseObject> usersList, ParseException e) {
+				if (usersList != null) {
 					ArrayList<String> nameUsers = new ArrayList<String>();
-					for	(int i = 0; i < scoreList.size(); i++){
-						nameUsers.add(scoreList.get(i).getString("username"));					
+					for	(int i = 0; i < usersList.size(); i++){
+						nameUsers.add(usersList.get(i).getString("username"));					
 					}	
 					mountSpinnerUsers(nameUsers);			
 				} 
@@ -89,8 +87,8 @@ public class ChooseUserActivity extends Activity {
 
 	public boolean checkLogin(String name) {
 
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
-		query.whereEqualTo("userName", name);
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+		query.whereEqualTo("username", name);
 		query.findInBackground(new FindCallback<ParseObject>() {
 			public void done(List<ParseObject> scoreList, ParseException e) {
 				if (scoreList != null) {
