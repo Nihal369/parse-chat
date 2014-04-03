@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.androidsx.hellowordparse.R;
-import com.parse.Parse;
 import com.parse.ParseObject;
 
 public class ParseChatActivity extends Activity {

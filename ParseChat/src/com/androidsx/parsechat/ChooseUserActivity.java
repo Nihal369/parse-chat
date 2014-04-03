@@ -62,9 +62,6 @@ public class ChooseUserActivity extends Activity {
 					
 					public void done(List<ParseUser> usersList, ParseException e) {
 						if (e == null) {
-							Log.d("score", "Retrieved " + usersList.size()
-									+ " users");
-
 							ArrayList<String> nameUsers = new ArrayList<String>();
 							for (int i = 0; i < usersList.size(); i++) {
 								nameUsers.add(usersList.get(i).getString(
@@ -72,7 +69,7 @@ public class ChooseUserActivity extends Activity {
 							}
 							mountSpinnerUsers(nameUsers);
 						} else {
-							Log.d("score", "Error: " + e.getMessage());
+							showToast("No users to load");
 						}
 					}
 				});
