@@ -8,28 +8,34 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.androidsx.hellowordparse.R;
+import com.parse.Parse;
 import com.parse.ParseObject;
 
 public class ParseChatActivity extends Activity {
 
 	private EditText txtMessage;
+	private TextView chatTxt;
 	private Button btnSend;
 	private static String username;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parse_hello_world);
-		
-		Intent intent = getIntent();
-	    username = intent.getStringExtra("user");		
 		setupUI();
+		Parse.initialize(this, Constants.APP_ID,Constants.CLIENT_KEY);
+		chatTxt.setText("");
+		Intent intent = getIntent();
+	    username = intent.getStringExtra("user");
 	}
 
 	public void setupUI() {
 		txtMessage = (EditText) findViewById(R.id.etMensaje);
+		chatTxt = (TextView)findViewById(R.id.chatParse);
 		btnSend = (Button) findViewById(R.id.btnSend);
 		btnSend.setOnClickListener(new OnClickListener() {
 
@@ -41,7 +47,7 @@ public class ParseChatActivity extends Activity {
 				message.put("userName", username);
 				message.put("message", data);
 				message.saveInBackground();
-
+				chatTxt.setText(username+": "+data + "\n");
 			}
 		});
 	}
