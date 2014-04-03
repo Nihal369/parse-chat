@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.PushService;
 
@@ -27,19 +27,16 @@ public class ParseChatActivity extends Activity {
 	private Button btnSend;
 	private static String username;
 	private String chatData;
-	private static String NO_VALID_NAME = "asdqweasdqwe";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parse_hello_world);
 		setupUI();
-		PushService.setDefaultPushCallback(this, ParseChatActivity.class);
-		// ParseAnalytics.trackAppOpened(getIntent());
-		// Parse.initialize(this, Constants.APP_ID,Constants.CLIENT_KEY);
-		ParseInstallation.getCurrentInstallation().saveInBackground();
+
 		PushService.subscribe(this, "Prueba", ParseChatActivity.class);
-		txtChat.setText("");
+		PushService.setDefaultPushCallback(this, ParseChatActivity.class);
+
 		Intent intent = getIntent();
 		username = intent.getStringExtra("user");
 	}
@@ -58,9 +55,10 @@ public class ParseChatActivity extends Activity {
 				message.put("userName", username);
 				message.put("message", data);
 				message.saveInBackground();
+				
+				createPushNotifications(data);
 				receiveMessage();
-				//chatTxt.setText(username + ": " + data + "\n");
-				// createPushNotifications();
+				txtMessage.setText("");
 			}
 		});
 	}
@@ -71,26 +69,26 @@ public class ParseChatActivity extends Activity {
 		return true;
 	}
 
-	// public void createPushNotifications (){
-	// ParsePush push = new ParsePush();
-	// push.setChannel("Prueba");
-	// push.setMessage(ParseChatActivity.message);
-	// push.sendInBackground();
-	// }
+	public void createPushNotifications(String message) {
+		ParsePush push = new ParsePush();
+		push.setChannel("Prueba");
+		push.setMessage(message);
+		push.sendInBackground();
+	}
 
 	private void receiveMessage() {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
-		query.whereNotEqualTo("userName", NO_VALID_NAME);
-		query.setLimit(3);
+		query.setLimit(5);
 		query.orderByAscending("createAt");
 		query.findInBackground(new FindCallback<ParseObject>() {
 			public void done(List<ParseObject> messages, ParseException e) {
 				if (e == null) {
 					for (int i = 0; i < messages.size(); i++) {
-						chatData += (messages.get(i).getString("userName")+": "+messages.get(i).getString("message")+"\n");
+						chatData += (messages.get(i).getString("userName")
+								+ ": " + messages.get(i).getString("message") + "\n");
 					}
 					txtChat.setText(chatData);
-					chatData="";
+					chatData = "";
 				} else {
 					Log.d("message", "Error: " + e.getMessage());
 				}
