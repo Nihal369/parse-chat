@@ -82,7 +82,7 @@ public class ParseChatActivity extends Activity {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
 		query.whereNotEqualTo("userName", NO_VALID_NAME);
 		query.setLimit(3);
-		query.orderByDescending("createAt");
+		query.orderByAscending("createAt");
 		query.findInBackground(new FindCallback<ParseObject>() {
 			public void done(List<ParseObject> messages, ParseException e) {
 				if (e == null) {
