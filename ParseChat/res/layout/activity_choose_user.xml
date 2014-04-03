@@ -15,28 +15,21 @@
         android:gravity="center"
         android:text="@string/title_activity_choose_user" />
 
-    <EditText
-        android:layout_below="@id/tittleLogin"
-        android:id="@+id/loginUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="@string/user" />
-
-    <EditText
-        android:layout_below="@id/loginUsername"
-        android:id="@+id/loginpass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="@string/password" />
-    
-    <Button 
-        android:layout_below="@id/loginpass"
+    <Button
         android:id="@+id/buttonLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tittleLogin"
+        android:layout_below="@+id/tittleLogin"
+        android:layout_marginTop="68dp"
         android:gravity="center"
-        android:text="@string/login"/>
+        android:text="@string/login" />
+
+    <Spinner
+        android:id="@+id/spinnerUsers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tittleLogin"
+        android:layout_below="@+id/tittleLogin" />
 
 </RelativeLayout>
