@@ -81,7 +81,7 @@ public class ChooseUserActivity extends Activity {
 		spinnerUsers.setAdapter(adapter);
 	}
 
-	public void openParseChatActivity(View view, String name) {
+	private void openParseChatActivity(String name) {
 		Intent i = new Intent(this, ParseChatActivity.class);
 		i.putExtra("user", name);
 		startActivity(i);
