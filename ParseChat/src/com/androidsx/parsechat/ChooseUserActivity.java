@@ -1,50 +1,99 @@
 package com.androidsx.parsechat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.androidsx.hellowordparse.R;
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class ChooseUserActivity extends Activity {
 
 	private Button btnLogin;
-	private EditText userName;
-	private EditText userPassword;
+	private Spinner spinnerUsers;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_choose_user);
+
+		Parse.initialize(this, "mMjR5lvou6mzMhjymYbEh39RCsqGQkvNLQqDQ47u",
+				"d8rT5X0HVKSS297euA4koJgsAdJaG1HEIlYnvgPM");
+
 		setupUI();
+		getParseUsers();
 	}
-	
-	private void setupUI(){
-		userName = (EditText)findViewById(R.id.loginUsername);
-		userPassword = (EditText)findViewById(R.id.loginpass);
-		btnLogin = (Button) findViewById(R.id.buttonLogin);	
+
+	private void setupUI() {
+		spinnerUsers = (Spinner) findViewById(R.id.spinnerUsers);
+		btnLogin = (Button) findViewById(R.id.buttonLogin);
 		btnLogin.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				boolean loginResult = checkLogin();
-				
-				if (loginResult){
-					openParseChatActivity(v);
-				}else{
+				String name = spinnerUsers.getSelectedItem().toString();
+				openParseChatActivity(v, name);
+			}
+		});
+	}
+
+	public void getParseUsers() {
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+		query.findInBackground(new FindCallback<ParseObject>() {
+			public void done(List<ParseObject> usersList, ParseException e) {
+				ParseQuery<ParseUser> query = ParseUser.getQuery();
+				query.findInBackground(new FindCallback<ParseUser>() {
 					
-				}
+					public void done(List<ParseUser> usersList, ParseException e) {
+						if (e == null) {
+							ArrayList<String> nameUsers = new ArrayList<String>();
+							for (int i = 0; i < usersList.size(); i++) {
+								nameUsers.add(usersList.get(i).getString(
+										"username"));
+							}
+							mountSpinnerUsers(nameUsers);
+						} else {
+							showToast("No users to load");
+						}
+					}
+				});
 
 			}
 		});
-		
+	}
+
+
+	private void mountSpinnerUsers(ArrayList<String> names) {
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, names);
+		spinnerUsers.setAdapter(adapter);
+	}
+
+	public void openParseChatActivity(View view, String name) {
+		Intent i = new Intent(this, ParseChatActivity.class);
+		i.putExtra("user", name);
+		startActivity(i);
+	}
+
+	public void showToast(String text) {
+		Toast toast = Toast.makeText(this, text, 3000);
+		toast.show();
 	}
 
 	@Override
@@ -52,25 +101,6 @@ public class ChooseUserActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.choose_user, menu);
 		return true;
-	}
-	
-	public void openParseChatActivity(View view){
-		Intent i = new Intent(this , ParseChatActivity.class);
-		
-		i.putExtra("user", userName.getText().toString());
-		startActivity(i);
-	}
-	
-	public boolean checkLogin(){
-		
-		String name = userName.getText().toString(); 
-		String password = userPassword.getText().toString();
-		
-		// Create a query - name and pass check
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
-		query.getInBackground(name, null);
-	
-		return false;
 	}
 
 }

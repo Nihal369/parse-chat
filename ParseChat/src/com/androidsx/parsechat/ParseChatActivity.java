@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.androidsx.hellowordparse.R;
-import com.parse.Parse;
 import com.parse.ParseObject;
 
 public class ParseChatActivity extends Activity {
@@ -25,11 +24,7 @@ public class ParseChatActivity extends Activity {
 		setContentView(R.layout.activity_parse_hello_world);
 		
 		Intent intent = getIntent();
-	    username = intent.getStringExtra("user");
-
-		Parse.initialize(this, "mMjR5lvou6mzMhjymYbEh39RCsqGQkvNLQqDQ47u",
-				"d8rT5X0HVKSS297euA4koJgsAdJaG1HEIlYnvgPM");
-		
+	    username = intent.getStringExtra("user");		
 		setupUI();
 	}
 
