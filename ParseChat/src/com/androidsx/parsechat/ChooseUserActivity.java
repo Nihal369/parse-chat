@@ -74,7 +74,8 @@ public class ChooseUserActivity extends Activity {
 					for	(int i = 0; i < usersList.size(); i++){
 						nameUsers.add(usersList.get(i).getString("username"));					
 					}	
-					mountSpinnerUsers(nameUsers);			
+					mountSpinnerUsers(nameUsers);
+					showToast(nameUsers.get(0));
 				} 
 			}
 		});		
