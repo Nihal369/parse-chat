@@ -26,6 +26,7 @@ public class ParseChatActivity extends Activity {
 	private TextView chatTxt;
 	private Button btnSend;
 	private static String username;
+	private String prueba;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +87,10 @@ public class ParseChatActivity extends Activity {
 			public void done(List<ParseObject> messages, ParseException e) {
 				if (e == null) {
 					for (int i = 0; i < messages.size(); i++) {
-						chatTxt.setText(messages.get(i).getString("userName")+": "+messages.get(i).getString("message")+"\n");
+						prueba += (messages.get(i).getString("userName")+": "+messages.get(i).getString("message")+"\n");
 					}
+					chatTxt.setText(prueba);
+					prueba="";
 				} else {
 					Log.d("message", "Error: " + e.getMessage());
 				}
