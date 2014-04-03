@@ -27,7 +27,6 @@ public class ChooseUserActivity extends Activity {
 
 	private Button btnLogin;
 	private Spinner spinnerUsers;
-	private boolean checkLogin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,21 +47,10 @@ public class ChooseUserActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
 				String name = spinnerUsers.getSelectedItem().toString();
-
-				boolean loginResult = checkLogin(name);
-
-				if (loginResult) {
-					showToast("Welcome user!");
-					openParseChatActivity(v, name);
-				} else {
-					showToast("Invalid username");
-				}
-
+				openParseChatActivity(v, name);
 			}
 		});
-
 	}
 
 	public void getParseUsers() {
@@ -93,22 +81,6 @@ public class ChooseUserActivity extends Activity {
 		});
 	}
 
-	public boolean checkLogin(String name) {
-
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-		query.whereEqualTo("username", name);
-		query.findInBackground(new FindCallback<ParseObject>() {
-			public void done(List<ParseObject> scoreList, ParseException e) {
-				if (scoreList != null) {
-					checkLogin = true;
-				} else {
-					checkLogin = false;
-				}
-			}
-		});
-
-		return checkLogin;
-	}
 
 	private void mountSpinnerUsers(ArrayList<String> names) {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
