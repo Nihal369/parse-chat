@@ -27,6 +27,7 @@ public class ParseChatActivity extends Activity {
 	private Button btnSend;
 	private static String username;
 	private String prueba;
+	private static String NO_VALID_NAME = "asdqweasdqwe";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class ParseChatActivity extends Activity {
 
 	private void receiveMessage() {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
-		query.whereNotEqualTo("userName", "pepito");
+		query.whereNotEqualTo("userName", NO_VALID_NAME);
 		query.setLimit(3);
 		query.orderByDescending("message");
 		query.findInBackground(new FindCallback<ParseObject>() {
