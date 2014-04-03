@@ -67,7 +67,6 @@ public class ParseChatActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.parse_hello_world, menu);
 		return true;
 	}
@@ -83,7 +82,7 @@ public class ParseChatActivity extends Activity {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
 		query.whereNotEqualTo("userName", NO_VALID_NAME);
 		query.setLimit(3);
-		query.orderByDescending("message");
+		query.orderByDescending("createAt");
 		query.findInBackground(new FindCallback<ParseObject>() {
 			public void done(List<ParseObject> messages, ParseException e) {
 				if (e == null) {
