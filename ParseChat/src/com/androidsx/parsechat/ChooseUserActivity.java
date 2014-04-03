@@ -3,10 +3,10 @@ package com.androidsx.parsechat;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,16 +27,14 @@ public class ChooseUserActivity extends Activity {
 
 	private Button btnLogin;
 	private Spinner spinnerUsers;
+	Constants constant = new Constants();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_choose_user);
-
-		Parse.initialize(this, "mMjR5lvou6mzMhjymYbEh39RCsqGQkvNLQqDQ47u",
-				"d8rT5X0HVKSS297euA4koJgsAdJaG1HEIlYnvgPM");
-
 		setupUI();
+		Parse.initialize(this, Constants.APP_ID,Constants.CLIENT_KEY);
 		getParseUsers();
 	}
 
@@ -73,11 +71,9 @@ public class ChooseUserActivity extends Activity {
 						}
 					}
 				});
-
 			}
 		});
 	}
-
 
 	private void mountSpinnerUsers(ArrayList<String> names) {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -91,6 +87,7 @@ public class ChooseUserActivity extends Activity {
 		startActivity(i);
 	}
 
+	@SuppressLint("ShowToast")
 	public void showToast(String text) {
 		Toast toast = Toast.makeText(this, text, 3000);
 		toast.show();
