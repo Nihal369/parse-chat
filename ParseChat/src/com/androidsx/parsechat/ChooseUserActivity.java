@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.androidsx.hellowordparse.R;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
