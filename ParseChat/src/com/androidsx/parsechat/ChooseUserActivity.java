@@ -44,7 +44,7 @@ public class ChooseUserActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				String name = spinnerUsers.getSelectedItem().toString();
-				openParseChatActivity(v, name);
+				openParseChatActivity(name);
 			}
 		});
 	}
