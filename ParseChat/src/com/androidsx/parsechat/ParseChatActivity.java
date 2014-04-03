@@ -23,10 +23,10 @@ import com.parse.PushService;
 public class ParseChatActivity extends Activity {
 
 	private EditText txtMessage;
-	private TextView chatTxt;
+	private TextView txtChat;
 	private Button btnSend;
 	private static String username;
-	private String prueba;
+	private String chatData;
 	private static String NO_VALID_NAME = "asdqweasdqwe";
 
 	@Override
@@ -39,14 +39,14 @@ public class ParseChatActivity extends Activity {
 		// Parse.initialize(this, Constants.APP_ID,Constants.CLIENT_KEY);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
 		PushService.subscribe(this, "Prueba", ParseChatActivity.class);
-		chatTxt.setText("");
+		txtChat.setText("");
 		Intent intent = getIntent();
 		username = intent.getStringExtra("user");
 	}
 
 	public void setupUI() {
 		txtMessage = (EditText) findViewById(R.id.etMensaje);
-		chatTxt = (TextView) findViewById(R.id.chatParse);
+		txtChat = (TextView) findViewById(R.id.chatParse);
 		btnSend = (Button) findViewById(R.id.btnSend);
 		btnSend.setOnClickListener(new OnClickListener() {
 
@@ -88,10 +88,10 @@ public class ParseChatActivity extends Activity {
 			public void done(List<ParseObject> messages, ParseException e) {
 				if (e == null) {
 					for (int i = 0; i < messages.size(); i++) {
-						prueba += (messages.get(i).getString("userName")+": "+messages.get(i).getString("message")+"\n");
+						chatData += (messages.get(i).getString("userName")+": "+messages.get(i).getString("message")+"\n");
 					}
-					chatTxt.setText(prueba);
-					prueba="";
+					txtChat.setText(chatData);
+					chatData="";
 				} else {
 					Log.d("message", "Error: " + e.getMessage());
 				}
