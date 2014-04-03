@@ -10,27 +10,41 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.androidsx.hellowordparse.R;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 public class ChooseUserActivity extends Activity {
 
-	private Button login;
-	private EditText user;
+	private Button btnLogin;
+	private EditText userName;
+	private EditText userPassword;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_choose_user);
-		
-		user = (EditText)findViewById(R.id.loginUsername);
-		login = (Button) findViewById(R.id.buttonLogin);
-		
-		login.setOnClickListener(new OnClickListener() {
+		setupUI();
+	}
+	
+	private void setupUI(){
+		userName = (EditText)findViewById(R.id.loginUsername);
+		userPassword = (EditText)findViewById(R.id.loginpass);
+		btnLogin = (Button) findViewById(R.id.buttonLogin);	
+		btnLogin.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				openParseChatActivity(v);
+				boolean loginResult = checkLogin();
+				
+				if (loginResult){
+					openParseChatActivity(v);
+				}else{
+					
+				}
+
 			}
 		});
+		
 	}
 
 	@Override
@@ -42,8 +56,21 @@ public class ChooseUserActivity extends Activity {
 	
 	public void openParseChatActivity(View view){
 		Intent i = new Intent(this , ParseChatActivity.class);
-		i.putExtra("user", user.getText().toString());
+		
+		i.putExtra("user", userName.getText().toString());
 		startActivity(i);
+	}
+	
+	public boolean checkLogin(){
+		
+		String name = userName.getText().toString(); 
+		String password = userPassword.getText().toString();
+		
+		// Create a query - name and pass check
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
+		query.getInBackground(name, null);
+	
+		return false;
 	}
 
 }
