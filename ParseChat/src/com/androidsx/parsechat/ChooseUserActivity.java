@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.androidsx.hellowordparse.R;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -27,7 +26,6 @@ public class ChooseUserActivity extends Activity {
 
 	private Button btnLogin;
 	private Spinner spinnerUsers;
-	Constants constant = new Constants();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +55,6 @@ public class ChooseUserActivity extends Activity {
 			public void done(List<ParseObject> usersList, ParseException e) {
 				ParseQuery<ParseUser> query = ParseUser.getQuery();
 				query.findInBackground(new FindCallback<ParseUser>() {
-					
 					public void done(List<ParseUser> usersList, ParseException e) {
 						if (e == null) {
 							ArrayList<String> nameUsers = new ArrayList<String>();
