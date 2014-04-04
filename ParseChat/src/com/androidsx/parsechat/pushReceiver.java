@@ -18,7 +18,7 @@ public class pushReceiver extends BroadcastReceiver {
             JSONObject jObject;
             try {
                     jObject = new JSONObject(message);
-                    Toast toast = Toast.makeText(context, jObject.getString("message"), 3000);
+                    Toast toast = Toast.makeText(context, jObject.getString("alert")+ jObject.getString("title"), 3000);
                     toast.show();
             } catch (JSONException e) {
                     e.printStackTrace();

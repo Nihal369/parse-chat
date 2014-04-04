@@ -85,7 +85,6 @@ public class ParseChatActivity extends Activity {
 		try {
             object.put("alert", message);
             object.put("title", "Chat");
-            object.put("action", "MyAction");
 			ParsePush pushNotification = new ParsePush();
 			pushNotification.setData(object);
 			pushNotification.setChannel("Prueba");
