@@ -23,7 +23,6 @@ import com.parse.PushService;
 public class ParseChatActivity extends Activity {
 
 	private EditText txtMessage;
-	private TextView txtChat;
 	private Button btnSend;
 	private Button btnRefreshMsg;
 	private static String username;
@@ -45,7 +44,6 @@ public class ParseChatActivity extends Activity {
 
 	public void setupUI() {
 		txtMessage = (EditText) findViewById(R.id.etMensaje);
-		txtChat = (TextView) findViewById(R.id.chatParse);
 		btnSend = (Button) findViewById(R.id.btnSend);
 		btnSend.setOnClickListener(new OnClickListener() {
 
@@ -87,16 +85,14 @@ public class ParseChatActivity extends Activity {
 
 	private void receiveMessage() {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
-		query.setLimit(6);
-		query.orderByDescending("createAt");
+		query.setLimit(5);
 		query.findInBackground(new FindCallback<ParseObject>() {
 			public void done(List<ParseObject> messages, ParseException e) {
 				if (e == null) {
-					for (int i = messages.size(); i > 0; i--) {
+					for (int i = 0; i < messages.size(); i++) {
 						chatData += (messages.get(i).getString("userName")
 								+ ": " + messages.get(i).getString("message") + "\n");
-					}
-					txtChat.setText(chatData);
+					}				
 					chatData = "";
 				} else {
 					Log.d("message", "Error: " + e.getMessage());

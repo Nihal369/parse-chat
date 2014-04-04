@@ -12,9 +12,8 @@
         android:id="@+id/etMensaje"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/chatParse"
-        android:layout_alignRight="@+id/chatParse"
-        android:layout_below="@id/chatParse"
+        android:layout_below="@+id/tvTitulo"
+        android:layout_centerHorizontal="true"
         android:hint="@string/hintet" />
 
     <Button
@@ -43,12 +42,5 @@
         android:layout_alignLeft="@+id/tvTitulo"
         android:layout_alignRight="@+id/etMensaje"
         android:text="@string/refresh" />
-
-    <TextView
-        android:id="@+id/chatParse"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/tvTitulo"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
