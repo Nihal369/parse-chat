@@ -57,6 +57,7 @@ public class ParseChatActivity extends Activity {
 		adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1);
 		chatListView.setAdapter(adapter);
+
 		btnSend.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -116,7 +117,7 @@ public class ParseChatActivity extends Activity {
 						chatData += (messages.get(i).getString("userName")
 								+ ": " + messages.get(i).getString("message") + "\n");
 					}
-					
+					addItems(chatData);
 					chatData = "";
 				} else {
 					Log.d("message", "Error: " + e.getMessage());
@@ -124,7 +125,11 @@ public class ParseChatActivity extends Activity {
 			}
 		});
 	}
-
+	
+	public void addItems(String message) {
+		adapter.add(message);
+        adapter.notifyDataSetChanged();
+    }
 
 
 }
