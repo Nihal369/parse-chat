@@ -60,10 +60,10 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.androidsx.parsechat.pushReceiver.java"
+            android:name="com.androidsx.parsechat.pushReceiver"
             android:exported="false" >
             <intent-filter>
-                <action android:name="com.example.UPDATE_STATUS" />
+                <action android:name="MyAction" />
             </intent-filter>
         </receiver>
     </application>
