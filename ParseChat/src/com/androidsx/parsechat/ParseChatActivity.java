@@ -113,6 +113,7 @@ public class ParseChatActivity extends Activity {
 		query.findInBackground(new FindCallback<ParseObject>() {
 			public void done(List<ParseObject> messages, ParseException e) {
 				if (e == null) {
+					adapter.clear();
 					for (int i = 0; i < messages.size(); i++) {
 						chatData += (messages.get(i).getString("userName")
 								+ ": " + messages.get(i).getString("message") + "\n");
