@@ -59,11 +59,10 @@
                 <category android:name="com.androidsx.parsechat" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name="com.androidsx.parsechat.pushReceiver"
-            android:exported="false" >
+        <receiver android:name="pushReceiver" >
             <intent-filter>
-                <action android:name="MyAction" />
+                <action android:name="MyAction" >
+                </action>
             </intent-filter>
         </receiver>
     </application>
