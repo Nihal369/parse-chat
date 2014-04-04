@@ -20,29 +20,20 @@
         android:id="@+id/btnSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/etMensaje"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/tvTitulo"
+        android:layout_alignParentRight="true"
         android:text="@string/buttontext" />
 
     <EditText
         android:id="@+id/etMensaje"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnRefreshMsg"
-        android:layout_alignLeft="@+id/chatList"
-        android:layout_alignRight="@+id/btnRefreshMsg"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:ems="10"
         android:hint="@string/hintet" />
 
-    <Button
-        android:id="@+id/btnRefreshMsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnSend"
-        android:layout_alignBottom="@+id/btnSend"
-        android:layout_alignRight="@+id/chatList"
-        android:text="@string/refresh" />
+
 
     <ListView
         android:id="@+id/chatList"

@@ -57,7 +57,6 @@ public class ParseChatActivity extends Activity {
 		adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1);
 		chatListView.setAdapter(adapter);
-
 		btnSend.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -68,17 +67,8 @@ public class ParseChatActivity extends Activity {
 				message.put("userName", username);
 				message.put("message", data);
 				message.saveInBackground();
-
 				createPushNotifications(data);
 				txtMessage.setText("");
-				receiveMessage();
-			}
-		});
-
-		btnRefreshMsg = (Button) findViewById(R.id.btnRefreshMsg);
-		btnRefreshMsg.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
 				receiveMessage();
 			}
 		});
