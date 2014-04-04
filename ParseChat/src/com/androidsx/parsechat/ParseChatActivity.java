@@ -88,11 +88,11 @@ public class ParseChatActivity extends Activity {
 	private void receiveMessage() {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
 		query.setLimit(6);
-		query.orderByAscending("createAt");
+		query.orderByDescending("createAt");
 		query.findInBackground(new FindCallback<ParseObject>() {
 			public void done(List<ParseObject> messages, ParseException e) {
 				if (e == null) {
-					for (int i = 0; i < messages.size(); i++) {
+					for (int i = messages.size(); i > 0; i--) {
 						chatData += (messages.get(i).getString("userName")
 								+ ": " + messages.get(i).getString("message") + "\n");
 					}
