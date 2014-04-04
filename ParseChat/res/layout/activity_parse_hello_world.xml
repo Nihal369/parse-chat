@@ -8,13 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ParseChatActivity" >
 
-    <TextView
-        android:id="@+id/chatParse"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/tvTitulo"
-        />
-
     <EditText
         android:id="@+id/etMensaje"
         android:layout_width="wrap_content"
@@ -50,5 +43,12 @@
         android:layout_alignLeft="@+id/tvTitulo"
         android:layout_alignRight="@+id/etMensaje"
         android:text="@string/refresh" />
+
+    <TextView
+        android:id="@+id/chatParse"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/tvTitulo"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -25,6 +25,7 @@ public class ParseChatActivity extends Activity {
 	private EditText txtMessage;
 	private TextView txtChat;
 	private Button btnSend;
+	private Button btnRefreshMsg;
 	private static String username;
 	private String chatData;
 
@@ -57,8 +58,15 @@ public class ParseChatActivity extends Activity {
 				message.saveInBackground();
 				
 				createPushNotifications(data);
-				receiveMessage();
 				txtMessage.setText("");
+			}
+		});
+		
+		btnRefreshMsg = (Button) findViewById(R.id.btnRefreshMsg);
+		btnRefreshMsg.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				receiveMessage();			
 			}
 		});
 	}
