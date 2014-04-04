@@ -37,6 +37,7 @@ public class ParseChatActivity extends Activity {
 
 		PushService.subscribe(this, "Prueba", ParseChatActivity.class);
 		PushService.setDefaultPushCallback(this, ParseChatActivity.class);
+		receiveMessage();
 
 		Intent intent = getIntent();
 		username = intent.getStringExtra("user");
@@ -56,17 +57,17 @@ public class ParseChatActivity extends Activity {
 				message.put("userName", username);
 				message.put("message", data);
 				message.saveInBackground();
-				
+
 				createPushNotifications(data);
 				txtMessage.setText("");
 			}
 		});
-		
+
 		btnRefreshMsg = (Button) findViewById(R.id.btnRefreshMsg);
 		btnRefreshMsg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				receiveMessage();			
+				receiveMessage();
 			}
 		});
 	}
@@ -86,7 +87,7 @@ public class ParseChatActivity extends Activity {
 
 	private void receiveMessage() {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
-		query.setLimit(5);
+		query.setLimit(6);
 		query.orderByAscending("createAt");
 		query.findInBackground(new FindCallback<ParseObject>() {
 			public void done(List<ParseObject> messages, ParseException e) {
