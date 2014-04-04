@@ -83,10 +83,12 @@ public class ParseChatActivity extends Activity {
 
 		JSONObject object = new JSONObject();
 		try {
-			object.put("message", message);
+            object.put("alert", message);
+            object.put("title", "Chat");
+            object.put("action", "MyAction");
 			ParsePush pushNotification = new ParsePush();
 			pushNotification.setData(object);
-			pushNotification.setChannel("Proba");
+			pushNotification.setChannel("Prueba");
 			pushNotification.sendInBackground();
 		} catch (JSONException e) {
 
