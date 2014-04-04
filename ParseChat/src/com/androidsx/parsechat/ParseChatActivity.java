@@ -108,7 +108,7 @@ public class ParseChatActivity extends Activity {
 
 	private void receiveMessage() {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
-		query.setLimit(5);
+		query.setLimit(4);
 		query.orderByDescending("createdAt");
 		query.findInBackground(new FindCallback<ParseObject>() {
 			public void done(List<ParseObject> messages, ParseException e) {
