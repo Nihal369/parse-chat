@@ -2,6 +2,9 @@ package com.androidsx.parsechat;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -19,6 +21,7 @@ import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.PushService;
+import com.parse.SendCallback;
 
 public class ParseChatActivity extends Activity {
 
@@ -77,10 +80,17 @@ public class ParseChatActivity extends Activity {
 	}
 
 	public void createPushNotifications(String message) {
-		ParsePush push = new ParsePush();
-		push.setChannel("Prueba");
-		push.setMessage(message);
-		push.sendInBackground();
+
+		JSONObject object = new JSONObject();
+		try {
+			object.put("message", message);
+			ParsePush pushNotification = new ParsePush();
+			pushNotification.setData(object);
+			pushNotification.setChannel("Proba");
+			pushNotification.sendInBackground();
+		} catch (JSONException e) {
+
+		}
 	}
 
 	private void receiveMessage() {
@@ -92,7 +102,7 @@ public class ParseChatActivity extends Activity {
 					for (int i = 0; i < messages.size(); i++) {
 						chatData += (messages.get(i).getString("userName")
 								+ ": " + messages.get(i).getString("message") + "\n");
-					}				
+					}
 					chatData = "";
 				} else {
 					Log.d("message", "Error: " + e.getMessage());
