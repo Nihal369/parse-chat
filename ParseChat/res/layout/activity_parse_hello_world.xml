@@ -9,12 +9,6 @@
     tools:context=".ParseChatActivity" >
 
     <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name" />
-
-    <TextView
         android:id="@+id/chatParse"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
@@ -25,6 +19,8 @@
         android:id="@+id/etMensaje"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/chatParse"
+        android:layout_alignRight="@+id/chatParse"
         android:layout_below="@id/chatParse"
         android:hint="@string/hintet" />
 
@@ -32,7 +28,27 @@
         android:id="@+id/btnSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/etMensaje"
         android:layout_below="@id/etMensaje"
+        android:layout_toLeftOf="@+id/tvTitulo"
         android:text="@string/buttontext" />
+
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/app_name" />
+
+    <Button
+        android:id="@+id/btnRefreshMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnSend"
+        android:layout_alignBottom="@+id/btnSend"
+        android:layout_alignLeft="@+id/tvTitulo"
+        android:layout_alignRight="@+id/etMensaje"
+        android:text="@string/refresh" />
 
 </RelativeLayout>
