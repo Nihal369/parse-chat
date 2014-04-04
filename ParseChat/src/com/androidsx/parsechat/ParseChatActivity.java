@@ -117,7 +117,7 @@ public class ParseChatActivity extends Activity {
 						chatData += (messages.get(i).getString("userName")
 								+ ": " + messages.get(i).getString("message") + "\n");
 					}
-					addItems(chatData);
+					addItemstoListView(chatData);
 					chatData = "";
 				} else {
 					Log.d("message", "Error: " + e.getMessage());
@@ -126,7 +126,7 @@ public class ParseChatActivity extends Activity {
 		});
 	}
 	
-	public void addItems(String message) {
+	public void addItemstoListView(String message) {
 		adapter.add(message);
         adapter.notifyDataSetChanged();
     }
