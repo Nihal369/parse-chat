@@ -5,7 +5,10 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
@@ -38,6 +42,14 @@ public class ParseChatActivity extends Activity {
 	private ListView chatListView;
 	private ArrayAdapter<String> adapter;
 
+	private BroadcastReceiver pushReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Log.d(TAG, "Just received a push. Let's update the messages");
+			receiveMessage();
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,9 +61,19 @@ public class ParseChatActivity extends Activity {
 		PushService.setDefaultPushCallback(this, ParseChatActivity.class);
 		
 		receiveMessage();
+		registerReceiver(pushReceiver, new IntentFilter("MyAction"));
 
 		Intent intent = getIntent();
 		username = intent.getStringExtra("user");
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		
+		if (pushReceiver != null) {
+			unregisterReceiver(pushReceiver);
+		}
 	}
 
 	public void setupUI() {
