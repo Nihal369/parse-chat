@@ -23,6 +23,7 @@ import com.parse.ParseQuery;
 import com.parse.PushService;
 
 public class ParseChatActivity extends Activity {
+	public static final String USER_NAME_KEY = "userName";
 
 	private static final String TAG = ParseChatActivity.class.getName();
 	private static final int MAX_CHAT_MESSAGES_TO_SHOW = 4;
@@ -63,7 +64,7 @@ public class ParseChatActivity extends Activity {
 			public void onClick(View v) {
 				String data = txtMessage.getText().toString();
 				ParseObject message = new ParseObject("Messages");
-				message.put("userName", username);
+				message.put(USER_NAME_KEY, username);
 				message.put("message", data);
 				message.saveInBackground();
 				createPushNotifications(data);
@@ -105,7 +106,7 @@ public class ParseChatActivity extends Activity {
 					
 					StringBuilder builder = new StringBuilder();
 					for (int i = messages.size() - 1; i >= 0; i--) {
-						builder.append(messages.get(i).getString("userName")
+						builder.append(messages.get(i).getString(USER_NAME_KEY)
 								+ ": " + messages.get(i).getString("message") + "\n");
 					}
 					addItemstoListView(builder.toString());
