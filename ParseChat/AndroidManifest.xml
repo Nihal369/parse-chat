@@ -59,7 +59,7 @@
                 <category android:name="com.androidsx.parsechat" />
             </intent-filter>
         </receiver>
-        <receiver android:name="pushReceiver" >
+        <receiver android:name="PushReceiver" >
             <intent-filter>
                 <action android:name="MyAction" >
                 </action>
