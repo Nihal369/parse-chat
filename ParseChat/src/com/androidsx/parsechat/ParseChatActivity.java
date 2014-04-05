@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
@@ -86,9 +87,13 @@ public class ParseChatActivity extends Activity {
 			object.put("alert", message);
 			object.put("title", "Chat");
 			object.put("action", "MyAction");
+			
+			ParseQuery query = ParseInstallation.getQuery();
+			query.whereNotEqualTo(USER_NAME_KEY, username);
+			
 			ParsePush pushNotification = new ParsePush();
+			pushNotification.setQuery(query);
 			pushNotification.setData(object);
-			pushNotification.setChannel("Prueba");
 			pushNotification.sendInBackground();
 		} catch (JSONException e) {
 			Log.e(TAG, "Could not parse the push notification", e);
