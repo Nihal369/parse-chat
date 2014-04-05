@@ -26,6 +26,7 @@ import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.PushService;
+import com.parse.SaveCallback;
 
 public class ParseChatActivity extends Activity {
 	public static final String USER_NAME_KEY = "userName";
@@ -91,10 +92,15 @@ public class ParseChatActivity extends Activity {
 				ParseObject message = new ParseObject("Messages");
 				message.put(USER_NAME_KEY, username);
 				message.put("message", data);
-				message.saveInBackground();
+				message.saveInBackground(new SaveCallback() {
+					
+					@Override
+					public void done(ParseException e) {
+						receiveMessage();
+					}
+				});
 				createPushNotifications(data);
 				txtMessage.setText("");
-				receiveMessage();
 			}
 		});
 	}
