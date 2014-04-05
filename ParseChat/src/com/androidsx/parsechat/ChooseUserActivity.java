@@ -16,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
@@ -33,7 +32,6 @@ public class ChooseUserActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_choose_user);
 		setupUI();
-		Parse.initialize(this, Constants.APP_ID,Constants.CLIENT_KEY);
 		getParseUsers();
 	}
 
