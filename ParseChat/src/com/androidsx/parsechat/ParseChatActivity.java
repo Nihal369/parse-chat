@@ -2,6 +2,8 @@ package com.androidsx.parsechat;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,34 +11,43 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
+import android.widget.ListView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.PushService;
 
 public class ParseChatActivity extends Activity {
+	public static final String USER_NAME_KEY = "userName";
+
+	private static final String TAG = ParseChatActivity.class.getName();
+	
+	// TODO: fix the layout to be able to put 100 here
+	private static final int MAX_CHAT_MESSAGES_TO_SHOW = 5;
+
+	private static String username;
 
 	private EditText txtMessage;
-	private TextView txtChat;
 	private Button btnSend;
-	private Button btnRefreshMsg;
-	private static String username;
-	private String chatData;
+	private ListView chatListView;
+	private ArrayAdapter<String> adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parse_hello_world);
+		
 		setupUI();
 
 		PushService.subscribe(this, "Prueba", ParseChatActivity.class);
 		PushService.setDefaultPushCallback(this, ParseChatActivity.class);
+		
 		receiveMessage();
 
 		Intent intent = getIntent();
@@ -45,28 +56,22 @@ public class ParseChatActivity extends Activity {
 
 	public void setupUI() {
 		txtMessage = (EditText) findViewById(R.id.etMensaje);
-		txtChat = (TextView) findViewById(R.id.chatParse);
 		btnSend = (Button) findViewById(R.id.btnSend);
+		chatListView = (ListView) findViewById(R.id.chatList);
+		adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1);
+		chatListView.setAdapter(adapter);
 		btnSend.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-
 				String data = txtMessage.getText().toString();
 				ParseObject message = new ParseObject("Messages");
-				message.put("userName", username);
+				message.put(USER_NAME_KEY, username);
 				message.put("message", data);
 				message.saveInBackground();
-
 				createPushNotifications(data);
 				txtMessage.setText("");
-			}
-		});
-
-		btnRefreshMsg = (Button) findViewById(R.id.btnRefreshMsg);
-		btnRefreshMsg.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
 				receiveMessage();
 			}
 		});
@@ -79,30 +84,51 @@ public class ParseChatActivity extends Activity {
 	}
 
 	public void createPushNotifications(String message) {
-		ParsePush push = new ParsePush();
-		push.setChannel("Prueba");
-		push.setMessage(message);
-		push.sendInBackground();
+		JSONObject object = new JSONObject();
+		try {
+			object.put("alert", message);
+			object.put("title", "Chat");
+			object.put("action", "MyAction");
+			
+			ParseQuery query = ParseInstallation.getQuery();
+			query.whereNotEqualTo(USER_NAME_KEY, username);
+			
+			ParsePush pushNotification = new ParsePush();
+			pushNotification.setQuery(query);
+			pushNotification.setData(object);
+			pushNotification.sendInBackground();
+		} catch (JSONException e) {
+			Log.e(TAG, "Could not parse the push notification", e);
+		}
 	}
 
 	private void receiveMessage() {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
-		query.setLimit(6);
-		query.orderByDescending("createAt");
+		query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
+		query.orderByDescending("createdAt");
 		query.findInBackground(new FindCallback<ParseObject>() {
 			public void done(List<ParseObject> messages, ParseException e) {
 				if (e == null) {
-					for (int i = messages.size(); i > 0; i--) {
-						chatData += (messages.get(i).getString("userName")
+					adapter.clear();
+					
+					StringBuilder builder = new StringBuilder();
+					for (int i = messages.size() - 1; i >= 0; i--) {
+						builder.append(messages.get(i).getString(USER_NAME_KEY)
 								+ ": " + messages.get(i).getString("message") + "\n");
 					}
-					txtChat.setText(chatData);
-					chatData = "";
+					addItemstoListView(builder.toString());
 				} else {
 					Log.d("message", "Error: " + e.getMessage());
 				}
 			}
 		});
 	}
+	
+	public void addItemstoListView(String message) {
+		adapter.add(message);
+        adapter.notifyDataSetChanged();
+        chatListView.invalidate();
+    }
+
 
 }

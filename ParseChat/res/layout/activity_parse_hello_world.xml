@@ -8,24 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ParseChatActivity" >
 
-    <EditText
-        android:id="@+id/etMensaje"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/chatParse"
-        android:layout_alignRight="@+id/chatParse"
-        android:layout_below="@id/chatParse"
-        android:hint="@string/hintet" />
-
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/etMensaje"
-        android:layout_below="@id/etMensaje"
-        android:layout_toLeftOf="@+id/tvTitulo"
-        android:text="@string/buttontext" />
-
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
@@ -35,20 +17,30 @@
         android:text="@string/app_name" />
 
     <Button
-        android:id="@+id/btnRefreshMsg"
+        android:id="@+id/btnSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnSend"
-        android:layout_alignBottom="@+id/btnSend"
-        android:layout_alignLeft="@+id/tvTitulo"
-        android:layout_alignRight="@+id/etMensaje"
-        android:text="@string/refresh" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/buttontext" />
 
-    <TextView
-        android:id="@+id/chatParse"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/tvTitulo"
-        android:layout_centerHorizontal="true" />
+    <EditText
+        android:id="@+id/etMensaje"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:ems="10"
+        android:hint="@string/hintet" />
+
+    <ListView
+        android:id="@+id/chatList"
+        android:background="#CCCCCC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitulo"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" >
+    </ListView>
 
 </RelativeLayout>

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -43,10 +44,17 @@ public class ChooseUserActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				String name = spinnerUsers.getSelectedItem().toString();
-				openParseChatActivity(name);
+				String userName = spinnerUsers.getSelectedItem().toString();
+				configureUserNameInParse(userName);
+				openParseChatActivity(userName);
 			}
 		});
+	}
+	
+	private void configureUserNameInParse(String userName) {
+		ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+		installation.put(ParseChatActivity.USER_NAME_KEY, userName);
+		installation.saveInBackground(); // TODO: We should actually wait until this is done...
 	}
 
 	public void getParseUsers() {
