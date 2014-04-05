@@ -27,7 +27,9 @@ public class ParseChatActivity extends Activity {
 	public static final String USER_NAME_KEY = "userName";
 
 	private static final String TAG = ParseChatActivity.class.getName();
-	private static final int MAX_CHAT_MESSAGES_TO_SHOW = 4;
+	
+	// TODO: fix the layout to be able to put 100 here
+	private static final int MAX_CHAT_MESSAGES_TO_SHOW = 5;
 
 	private static String username;
 
